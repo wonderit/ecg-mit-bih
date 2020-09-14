@@ -37,8 +37,8 @@ def train(config, X, y, Xval=None, yval=None):
             ModelCheckpoint('models/{}-latest.hdf5'.format(config.feature), monitor='val_loss', save_best_only=False, verbose=1, period=10)
             # , lr_decay_callback
     ]
-
-    model.fit(Xe, y,
+    if config.is_train == True:
+        model.fit(Xe, y,
             validation_data=(Xvale, yval),
             epochs=config.epochs,
             batch_size=config.batch,

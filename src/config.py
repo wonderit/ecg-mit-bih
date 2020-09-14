@@ -33,9 +33,10 @@ train_arg.add_argument('--min_lr', type=float, default = 0.00005)
 train_arg.add_argument('--checkpoint_path', type=str, default = None)
 train_arg.add_argument('--resume_epoch', type=int)
 train_arg.add_argument('--ensemble', type=bool, default = False)
-train_arg.add_argument('--trained_model', type=str, default = '../models/MLII-small-latest.hdf5',
-# train_arg.add_argument('--trained_model', type=str, default = None,
+# train_arg.add_argument('--trained_model', type=str, default = '../models/MLII-small-latest.hdf5',
+train_arg.add_argument('--trained_model', type=str, default = None,
                        help='dir and filename of the trained model for usage.')
+misc_arg.add_argument('--is_train', type=bool, default = True)
 
 predict_arg = add_argument_group('predict')
 predict_arg.add_argument('--num', type=int, default = None)
