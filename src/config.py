@@ -18,21 +18,23 @@ data_arg = add_argument_group('data')
 data_arg.add_argument('--downloading', type=bool, default = False)
 
 graph_arg = add_argument_group('graph')
-graph_arg.add_argument('--filter_length', type=int, default = 32)
-graph_arg.add_argument('--kernel_size', type=int, default = 16)
+graph_arg.add_argument('--filter_length', type=int, default = 16)
+graph_arg.add_argument('--kernel_size', type=int, default = 7)
 graph_arg.add_argument('--drop_rate', type=float, default = 0.2)
+graph_arg.add_argument('--drop_rate_large', type=float, default = 0.5)
 
 train_arg = add_argument_group('train')
 train_arg.add_argument('--feature', type=str, default = "MLII",
                        help='one of MLII, V1, V2, V4, V5. Favorably MLII or V1')
-train_arg.add_argument('--epochs', type=int, default = 80)
+train_arg.add_argument('--epochs', type=int, default = 10)
 train_arg.add_argument('--batch', type=int, default = 256)
 train_arg.add_argument('--patience', type=int, default = 10)
 train_arg.add_argument('--min_lr', type=float, default = 0.00005)
 train_arg.add_argument('--checkpoint_path', type=str, default = None)
 train_arg.add_argument('--resume_epoch', type=int)
 train_arg.add_argument('--ensemble', type=bool, default = False)
-train_arg.add_argument('--trained_model', type=str, default = None, 
+train_arg.add_argument('--trained_model', type=str, default = '../models/MLII-small-latest.hdf5',
+# train_arg.add_argument('--trained_model', type=str, default = None,
                        help='dir and filename of the trained model for usage.')
 
 predict_arg = add_argument_group('predict')

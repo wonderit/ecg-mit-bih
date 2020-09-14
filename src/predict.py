@@ -16,7 +16,7 @@ def cincData(config):
     import csv
     testlabel = []
 
-    with open('training2017/REFERENCE.csv') as csv_file:
+    with open('../training2017/REFERENCE.csv') as csv_file:
       csv_reader = csv.reader(csv_file, delimiter=',')
       line_count = 0
       for row in csv_reader:
@@ -28,7 +28,7 @@ def cincData(config):
       high = len(testlabel)-1
       num = np.random.randint(1,high)
     filename , label = testlabel[num-1]
-    filename = 'training2017/'+ filename + '.mat'
+    filename = '../training2017/'+ filename + '.mat'
     from scipy.io import loadmat
     data = loadmat(filename)
     print("The record of "+ filename)
@@ -59,13 +59,13 @@ def predictByPart(data, peaks):
     result = ""
     counter = [0]* len(classesM)
     from keras.models import load_model
-    model = load_model('models/MLII-latest.hdf5')
+    model = load_model('../models/MLII-small-latest.hdf5')
     config = get_config() 
     for i, peak in enumerate(peaks[3:-1]):
       total_n =len(peaks)
       start, end =  peak-config.input_size//2 , peak+config.input_size//2
       prob = model.predict(data[:, start:end])
-      prob = prob[:,0]
+      # prob = prob[:,0]
       ann = np.argmax(prob)
       counter[ann]+=1
       if classesM[ann] != "N":
@@ -76,7 +76,7 @@ def predictByPart(data, peaks):
         import matplotlib.pyplot as plt
         plt.plot(data[:, start:end][0,:,0],)
         mkdir_recursive('results')
-        plt.savefig('results/hazard-'+classesM[ann]+'.png', format="png", dpi = 300)
+        plt.savefig('../results/hazard-'+classesM[ann]+'.png', format="png", dpi = 300)
         plt.close()
     result += "{}-N, {}-Venticular, {}-Paced, {}-A, {}-F, {}-Noise".format(counter[0], counter[1], counter[2], counter[3], counter[4], counter[5])
     return predicted, result

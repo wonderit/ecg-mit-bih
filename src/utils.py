@@ -18,15 +18,15 @@ def mkdir_recursive(path):
 def loaddata(input_size, feature):
     import deepdish.io as ddio
     mkdir_recursive('dataset')
-    trainData = ddio.load('dataset/train.hdf5')
-    testlabelData= ddio.load('dataset/trainlabel.hdf5')
+    trainData = ddio.load('../dataset/train.hdf5')
+    testlabelData= ddio.load('../dataset/trainlabel.hdf5')
     X = np.float32(trainData[feature])
     y = np.float32(testlabelData[feature])
     att = np.concatenate((X,y), axis=1)
     np.random.shuffle(att)
     X , y = att[:,:input_size], att[:, input_size:]
-    valData = ddio.load('dataset/test.hdf5')
-    vallabelData= ddio.load('dataset/testlabel.hdf5')
+    valData = ddio.load('../dataset/test.hdf5')
+    vallabelData= ddio.load('../dataset/testlabel.hdf5')
     Xval = np.float32(valData[feature])
     yval = np.float32(vallabelData[feature])
     return (X, y, Xval, yval)
@@ -95,7 +95,7 @@ def plot_confusion_matrix(y_true, y_pred, classes, feature,
                     color="white" if cm[i, j] > thresh else "black")
     fig.tight_layout()
     mkdir_recursive('results')
-    fig.savefig('results/confusionMatrix-'+feature+'.eps', format='eps', dpi=1000)
+    fig.savefig('../results/confusionMatrix-'+feature+'.png', format='png', dpi=600)
     return ax
 
 
@@ -142,9 +142,9 @@ def PR_ROC_curves(ytrue, ypred, classes, ypred_mat):
         cax2.legend(loc=4)
 
     mkdir_recursive("results")
-    plt.savefig("results/model_prec_recall_and_roc.eps",
-        dpi=400,
-        format='eps',
+    plt.savefig("../results/model_prec_recall_and_roc.png",
+        dpi=600,
+        format='png',
         bbox_inches='tight')
     plt.close()
 
@@ -153,15 +153,17 @@ def print_results(config, model, Xval, yval, classes):
     if config.trained_model:
         model.load_weights(config.trained_model)
     else:    
-        model.load_weights('models/{}-latest.hdf5'.format(config.feature))
+        model.load_weights('../models/{}-small-latest.hdf5'.format(config.feature))
     # to combine different trained models. On testing  
     if config.ensemble:
-        model2.load_weight('models/weights-V1.hdf5')
+        model2.load_weight('../models/weights-V1.hdf5')
         ypred_mat = (model.predict(Xval) + model2.predict(Xval))/2
     else:
-        ypred_mat = model.predict(Xval)  
-    ypred_mat = ypred_mat[:,0]
-    yval = yval[:,0]
+        ypred_mat = model.predict(Xval)
+
+    # for original :
+    # ypred_mat = ypred_mat[:,0]
+    # yval = yval[:,0]
 
     ytrue = np.argmax(yval,axis=1)
     yscore = np.array([ypred_mat[x][ytrue[x]] for x in range(len(yval))])
