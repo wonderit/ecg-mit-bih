@@ -76,7 +76,7 @@ def predictByPart(data, peaks):
         import matplotlib.pyplot as plt
         plt.plot(data[:, start:end][0,:,0],)
         mkdir_recursive('results')
-        plt.savefig('../results/hazard-'+classesM[ann]+'.png', format="png", dpi = 300)
+        plt.savefig('results/hazard-'+classesM[ann]+'.png', format="png", dpi = 300)
         plt.close()
     result += "{}-N, {}-Venticular, {}-Paced, {}-A, {}-F, {}-Noise".format(counter[0], counter[1], counter[2], counter[3], counter[4], counter[5])
     return predicted, result

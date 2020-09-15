@@ -95,7 +95,7 @@ def plot_confusion_matrix(y_true, y_pred, classes, feature,
                     color="white" if cm[i, j] > thresh else "black")
     fig.tight_layout()
     mkdir_recursive('results')
-    fig.savefig('../results/confusionMatrix-'+feature+'.png', format='png', dpi=600)
+    fig.savefig('results/confusionMatrix-'+feature+'.png', format='png', dpi=600)
     return ax
 
 
@@ -142,7 +142,7 @@ def PR_ROC_curves(ytrue, ypred, classes, ypred_mat):
         cax2.legend(loc=4)
 
     mkdir_recursive("results")
-    plt.savefig("../results/model_prec_recall_and_roc.png",
+    plt.savefig("results/model_prec_recall_and_roc.png",
         dpi=600,
         format='png',
         bbox_inches='tight')
