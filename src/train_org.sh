@@ -1,2 +1,2 @@
 #!/bin/bash
-nohup  python train_org.py --filter_length 8 --kernel_size 16 --is_train True --epochs 1 > train_org.log &
+nohup  python train_org.py --filter_length 32 --kernel_size 16 --is_train True --epochs 80 > train_org.log &
