@@ -150,11 +150,10 @@ def PR_ROC_curves(ytrue, ypred, classes, ypred_mat):
 
 def print_results(config, model, Xval, yval, classes):
     model2 = model
-    checkpoint_path = os.path.join(os.getcwd(), 'models/{}-latest.hdf5')
     if config.trained_model:
         model.load_weights(config.trained_model)
     else:    
-        model.load_weights(checkpoint_path.format(config.feature))
+        model.load_weights('models/{}-latest.hdf5'.format(config.feature))
     # to combine different trained models. On testing  
     if config.ensemble:
         model2.load_weight('models/weights-V1.hdf5')
