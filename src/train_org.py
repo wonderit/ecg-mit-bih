@@ -29,14 +29,12 @@ def train(config, X, y, Xval=None, yval=None):
         initial_epoch = 0
 
     mkdir_recursive('models')
-    checkpoint_path = os.path.join(os.getcwd(), 'models/{}-latest.hdf5')
-    print('path : ', checkpoint_path)
     #lr_decay_callback = LearningRateSchedulerPerBatch(lambda epoch: 0.1)
     callbacks = [
             EarlyStopping(patience = config.patience, verbose=1),
             ReduceLROnPlateau(factor = 0.5, patience = 3, min_lr = 0.01, verbose=1),
             TensorBoard( log_dir='./logs', histogram_freq=0, write_graph = True, write_grads=False, write_images=True),
-            ModelCheckpoint(checkpoint_path.format(config.feature), monitor='val_loss', save_best_only=False, verbose=1, period=10)
+            ModelCheckpoint('models/{}-latest.hdf5'.format(config.feature), monitor='val_loss', save_best_only=False, verbose=1, period=10)
             # , lr_decay_callback
     ]
     if config.is_train == True:
