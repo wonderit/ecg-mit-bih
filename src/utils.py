@@ -153,10 +153,10 @@ def print_results(config, model, Xval, yval, classes):
     if config.trained_model:
         model.load_weights(config.trained_model)
     else:    
-        model.load_weights('../models/{}-latest.hdf5'.format(config.feature))
+        model.load_weights('models/{}-latest.hdf5'.format(config.feature))
     # to combine different trained models. On testing  
     if config.ensemble:
-        model2.load_weight('../models/weights-V1.hdf5')
+        model2.load_weight('models/weights-V1.hdf5')
         ypred_mat = (model.predict(Xval) + model2.predict(Xval))/2
     else:
         ypred_mat = model.predict(Xval)

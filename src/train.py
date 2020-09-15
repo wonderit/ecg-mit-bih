@@ -36,7 +36,7 @@ def train(config, X, y, Xval=None, yval=None):
             EarlyStopping(patience = config.patience, verbose=1),
             ReduceLROnPlateau(factor = 0.5, patience = 3, min_lr = 0.01, verbose=1),
             TensorBoard( log_dir='./logs', histogram_freq=0, write_graph = True, write_grads=False, write_images=True),
-            ModelCheckpoint('../models/{}-small-latest.hdf5'.format(config.feature), monitor='val_loss', save_best_only=False, verbose=1, period=10)
+            ModelCheckpoint('models/{}-small-latest.hdf5'.format(config.feature), monitor='val_loss', save_best_only=False, verbose=1, period=10)
             # , lr_decay_callback
     ]
     data_dir = 'processed_data'
